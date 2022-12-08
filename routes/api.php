@@ -39,6 +39,10 @@ Route::get('trips', function (Request $request) {
 
 });
 
+Route::get('test', function () {
+
+    return 'test';
+});
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
