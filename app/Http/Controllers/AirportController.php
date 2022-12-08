@@ -16,7 +16,8 @@ class AirportController extends Controller
     {
         $airports = Airport::all();
 
-        return $airports;
+        return 'airports';
+        // return $airports;
     }
 
     /**
