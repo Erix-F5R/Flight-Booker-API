@@ -96,7 +96,12 @@ class FlightController extends Controller
             $trip->updatePrice($leg_2_flight->price);
             $trip->addDepartureFlight($leg_2_flight);
 
-            $trips[] = $trip;
+            //Check that the times line up for the connection
+            if (strtotime($leg_1_flight->arrival_time) < strtotime($leg_2_flight->departure_time)) {
+                $trips[] = $trip;
+            }
+
+
 
         }
 
@@ -176,16 +181,22 @@ class FlightController extends Controller
             //get return flights
 
             $return_1 = Flight::where('airline', $flight->airline)->where('number', $flight->return_1_number)->first();
-            $return_1['date'] = $departure_date;
+            $return_1['date'] = $return_date;
             $trip->updatePrice($return_1->price);
             $trip->addReturnFlight($return_1);
 
             $return_2 = Flight::where('airline', $flight->airline)->where('number', $flight->return_2_number)->first();
-            $return_2['date'] = $departure_date;
+            $return_2['date'] = $return_date;
             $trip->updatePrice($return_2->price);
             $trip->addReturnFlight($return_2);
 
-            $trips[] = $trip;
+            if (
+                strtotime($departure_1->arrival_time) < strtotime($departure_2->departure_time)
+                && strtotime($return_1->arrival_time) < strtotime($return_2->departure_time)
+            ) {
+
+                $trips[] = $trip;
+            }
 
         }
 

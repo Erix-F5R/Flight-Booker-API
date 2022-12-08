@@ -39,6 +39,20 @@ Route::get('trips', function (Request $request) {
     return $flightQuery->getByAirportCode($request->departure_airport, $request->arrival_airport);
 });
 
+Route::get('test', function () {
+
+    $time1 = strtotime('09:00');
+    $time2 = strtotime('08:43');
+
+    if($time1> $time2){
+        return 'true';
+    }else{
+        return 'false';
+    }
+
+
+});
+
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
